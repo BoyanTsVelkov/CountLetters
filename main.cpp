@@ -8,22 +8,22 @@
 #include <cstring>
 #include <cstdint>
 #include <chrono>
-/*
-uint64_t countLetersInLine(const std::string line, const char searchedLeter)
+
+uint64_t countlettersInLine(const std::string line, const char searchedLetter)
 {
-    uint64_t letersInLine = 0;
+    uint64_t lettersInLine = 0;
 
     const uint64_t lineSize = line.size();
 
     for(uint64_t i = 0; i < lineSize; ++i)
     {
-        if(searchedLeter == line[i])
+        if(searchedLetter == line[i])
         {
-            letersInLine++;
+            lettersInLine++;
         }
     }
 
-    return letersInLine;
+    return lettersInLine;
 }
 
 int main()
@@ -32,7 +32,7 @@ int main()
 
     std::ifstream textFile;
     std::string line;
-    const char searchedLeter = 'e';
+    const char searchedLetter = 'e';
     uint64_t countFoundLetters = 0;
 
     textFile.open("text");
@@ -43,13 +43,13 @@ int main()
     {
         while(getline(textFile, line))
         {
-            countFoundLetters += countLetersInLine(line, searchedLeter);
+            countFoundLetters += countlettersInLine(line, searchedLetter);
         }
 
         textFile.close();
     }
 
-    std::cout << "Found all letter \"" << searchedLeter << "\" in file text "
+    std::cout << "Found all letter \"" << searchedLetter << "\" in file text "
                             "they number is " << countFoundLetters << std::endl;
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -64,120 +64,33 @@ int main()
 
     return 0;
 }
-*/
 
 
-/////-----------------------------------------------------------------------------
-//
-//#include <thread>
-//#include <vector>
-//
-//void countLetersInLine(const std::string line, const char searchedLeter,
-//                                                       uint64_t & countedLeters)
-//{
-//    uint64_t letersInLine = 0;
-//
-//    const uint64_t lineSize = line.size();
-//
-//    for(uint64_t i = 0; i < lineSize; ++i)
-//    {
-//        if(searchedLeter == line[i])
-//        {
-//            letersInLine++;
-//        }
-//    }
-//
-//    countedLeters = letersInLine;
-//}
-//
-//int main()
-//{
-//    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-//
-//    std::ifstream textFile;
-//    std::string line;
-//    const char searchedLeter = 'e';
-//    uint64_t countFoundLetters = 0;
-//
-//    std::vector <std::thread> threadPool;
-//    threadPool.reserve(100);
-//
-//    std::vector<uint64_t> letersPerLine;
-//    letersPerLine.reserve(100);
-//
-//
-//    textFile.open("text");
-//
-//    ///std::cout << textFile.is_open() << std::endl;
-//
-//    if(textFile.is_open())
-//    {
-//        while(getline(textFile, line))
-//        {
-////            std::thread singleTh (countLetersInLine, line, searchedLeter);
-//            letersPerLine.emplace_back(0);
-//            const uint64_t lastElement = letersPerLine.size() - 1;
-//
-//            threadPool.emplace_back(std::thread(countLetersInLine, line,
-//                                    searchedLeter, std::ref(letersPerLine[lastElement])));
-//        }
-//
-//        textFile.close();
-//    }
-//    std::cout << "letersPerLine.size() = " << letersPerLine.size() << std::endl;
-//    for(std::thread & activeThreds: threadPool)
-//    {
-//        activeThreds.join();
-//    }
-//
-//    for(const uint64_t & currentLineCounter: letersPerLine)
-//    {
-//        countFoundLetters += currentLineCounter;
-//    }
-//
-//    std::cout << "Found all letter \"" << searchedLeter << "\" in file text "
-//                            "they number is " << countFoundLetters << std::endl;
-//
-//    std::cout << "Found all letter \"" << searchedLeter << "\" in file text "
-//                            "they number is " << countFoundLetters << std::endl;
-//
-//    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-//
-//    std::cout << "Time difference = " <<
-//    std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()
-//                                                         << "[µs]" << std::endl;
-//
-//    std::cout << "Time difference = " <<
-//    std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count()
-//                                                         << "[ns]" << std::endl;
-//
-//
-//    return 0;
-//}
 
 ///-----------------------------------------------------------------------------
 
+/*
 #include <thread>
 #include <vector>
 
 #define THREAD_NUMBER 8
 
-void countLetersInLine(const std::string line, const char searchedLeter,
-                                                       uint64_t & countedLeters)
+void countLettersInLine(const std::string line, const char searchedLetter,
+                                                       uint64_t & countedLetters)
 {
-    uint64_t letersInLine = 0;
+    uint64_t lettersInLine = 0;
 
     const uint64_t lineSize = line.size();
 
     for(uint64_t i = 0; i < lineSize; ++i)
     {
-        if(searchedLeter == line[i])
+        if(searchedLetter == line[i])
         {
-            letersInLine++;
+            lettersInLine++;
         }
     }
 
-    countedLeters = letersInLine;
+    countedLetters = lettersInLine;
 }
 
 int main()
@@ -186,7 +99,7 @@ int main()
 
     std::ifstream textFile;
     std::string line;
-    const char searchedLeter = 'e';
+    const char searchedLetter = 'e';
     uint64_t countFoundLetters = 0;
 
     std::string fullText;
@@ -194,7 +107,7 @@ int main()
     std::vector <std::thread> threadPool;
     threadPool.resize(THREAD_NUMBER);
 
-    std::vector<uint64_t> letersPerLine(THREAD_NUMBER,0);
+    std::vector<uint64_t> lettersPerLine(THREAD_NUMBER,0);
 
     textFile.open("text");
 
@@ -223,26 +136,35 @@ int main()
     //while(beggining < textSize)
     for(uint16_t i = 0; i < THREAD_NUMBER; ++i)
     {
-        threadPool[i] = (std::thread(countLetersInLine, fullText.substr(beggining, part),
-                                    searchedLeter, std::ref(letersPerLine[i])));
+        threadPool[i] = (std::thread(countLettersInLine, fullText.substr(beggining, part),
+                                    searchedLetter, std::ref(lettersPerLine[i])));
 
         beggining += part;
     }
 
-//    std::cout << "letersPerLine.size() = " << letersPerLine.size() << std::endl;
+    uint64_t lettersInLastPart = 0;
+
+    if(beggining < textSize)
+    {
+        countLettersInLine(fullText.substr(beggining), searchedLetter,
+                                                             lettersInLastPart);
+    }
+
+//    std::cout << "lettersPerLine.size() = " << lettersPerLine.size() << std::endl;
 
     for(std::thread & activeThreds: threadPool)
     {
         activeThreds.join();
     }
 
-    for(const uint64_t & currentLineCounter: letersPerLine)
+    for(const uint64_t & currentLineCounter: lettersPerLine)
     {
         countFoundLetters += currentLineCounter;
     }
 
+    countFoundLetters += lettersInLastPart;
 
-    std::cout << "Found all letter \"" << searchedLeter << "\" in file text "
+    std::cout << "Found all letter \"" << searchedLetter << "\" in file text "
                             "they number is " << countFoundLetters << std::endl;
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -259,4 +181,4 @@ int main()
     return 0;
 }
 
-
+*/
